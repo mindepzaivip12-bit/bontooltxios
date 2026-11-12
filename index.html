@@ -3,19 +3,15 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>Bontools</title>
+<title>Bontools </title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: sans-serif; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #05050a; }
+  
+  /* LINK GAME FULL MÀN HÌNH (Vẫn giữ nhưng sẽ ẩn đi trên Safari) */
+  #siteFrame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #000; z-index: 0; display: none; }
 
-  /* ===== IFRAME GAME FULL MÀN HÌNH ===== */
-  #siteFrame {
-    position: fixed; top: 0; left: 0;
-    width: 100vw; height: 100vh; height: 100dvh;
-    border: 0; background: #000; z-index: 0; display: block;
-  }
-
-  /* NÚT BÁNH RĂNG */
+  /* NÚT BÁNH RĂNG (CÀI ĐẶT) */
   #settingsBtn {
     position: fixed; top: 15px; right: 15px; z-index: 99998;
     width: 45px; height: 45px; border-radius: 50%;
@@ -27,23 +23,27 @@
   #settingsBtn:active { transform: scale(0.9) rotate(90deg); }
   #settingsBtn svg { width: 24px; height: 24px; fill: #00ffff; }
 
-  /* LỚP PHỦ MENU */
+  /* LỚP PHỦ MENU (OVERLAY) */
   #loginOverlay {
     position: fixed; inset: 0; z-index: 99999;
     background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
     display: flex; justify-content: center; align-items: center;
     opacity: 0; visibility: hidden; transition: all 0.3s ease;
-    padding: 15px;
   }
   #loginOverlay.active { opacity: 1; visibility: visible; }
 
-  .box-key {
-    background: #0d0a12; border-radius: 12px; border: 2px solid #ff3399;
-    box-shadow: 0 0 20px rgba(255,51,153,0.4), inset 0 0 10px rgba(255,51,153,0.1);
-    max-width: 310px; width: 100%; position: relative; overflow: hidden;
+  /* KHUNG MENU CHÍNH */
+  .box-key { 
+    background: #0d0a12; 
+    border-radius: 12px; 
+    border: 2px solid #ff3399; 
+    box-shadow: 0 0 20px rgba(255,51,153,0.4), inset 0 0 10px rgba(255,51,153,0.1); 
+    max-width: 310px; 
+    width: 100%; 
+    position: relative;
+    overflow: hidden;
     transform: translateY(20px) scale(0.95);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    max-height: 90vh; overflow-y: auto;
   }
   #loginOverlay.active .box-key { transform: translateY(0) scale(1); }
 
@@ -56,11 +56,11 @@
     box-shadow: 0 0 10px rgba(255,51,51,0.5);
   }
 
-  .brand-title {
-    text-align: center; color: #00ffff; font-size: 13px; font-weight: bold;
+  .brand-title { 
+    text-align: center; color: #00ffff; font-size: 13px; font-weight: bold; 
     padding: 14px 30px;
     background: linear-gradient(90deg, rgba(255,51,153,0.2) 0%, rgba(0,255,255,0.1) 100%);
-    text-transform: uppercase; text-shadow: 0 0 8px rgba(0,255,255,0.6);
+    text-transform: uppercase; text-shadow: 0 0 8px rgba(0,255,255,0.6); 
     letter-spacing: 1px; border-bottom: 1px solid #ff3399;
   }
 
@@ -74,9 +74,9 @@
 
   .activate-title { color: #ff3399; font-size: 13px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
   .input-group { display: flex; gap: 6px; margin-bottom: 10px; }
-  .input-group input { flex: 1; padding: 8px 10px; border: 1px solid #00ffff; background: #000; color: #fff; border-radius: 6px; font-size: 13px; outline: none; min-width: 0; }
-  .input-group button {
-    padding: 0 12px; background: #ffb3d9; color: #000; border: none; border-radius: 6px;
+  .input-group input { flex: 1; padding: 8px 10px; border: 1px solid #00ffff; background: #000; color: #fff; border-radius: 6px; font-size: 13px; outline: none; }
+  .input-group button { 
+    padding: 0 12px; background: #ffb3d9; color: #000; border: none; border-radius: 6px; 
     font-weight: bold; cursor: pointer; font-size: 12px; display: flex; justify-content: center; align-items: center; min-width: 80px;
   }
   .input-group button:disabled { opacity: 0.8; cursor: not-allowed; background: #888; color: #fff; }
@@ -92,9 +92,8 @@
   /* THANH ĐIỀU KHIỂN TOOL */
   .control-panel { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.5s ease; }
   .control-panel.active { opacity: 1; visibility: visible; }
-  .ctrl-btn { background: rgba(20, 20, 20, 0.85); border: 1px solid #ff1a8c; color: #fff; padding: 8px 18px; border-radius: 20px; font-weight: bold; font-size: 13px; cursor: pointer; backdrop-filter: blur(4px); transition: 0.2s; white-space: nowrap; }
+  .ctrl-btn { background: rgba(20, 20, 20, 0.8); border: 1px solid #ff1a8c; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; backdrop-filter: blur(4px); transition: 0.2s; }
   .ctrl-btn.hidden-tool { opacity: 0.4; border-color: #444; }
-  .ctrl-btn:active { transform: scale(0.95); }
 
   /* ROBOT */
   .robot-wrapper { position: fixed; z-index: 99; user-select: none; touch-action: none; cursor: grab; opacity: 0; visibility: hidden; transition: opacity 0.6s ease, visibility 0.6s ease; }
@@ -102,19 +101,17 @@
   .robot-wrapper.is-hidden { opacity: 0 !important; visibility: hidden !important; pointer-events: none; }
   #robotMd5 { left: 5%; top: 10%; }
   #robotHu { left: 5%; bottom: 15%; top: auto; }
-
+  
   .ai-robot-container { position: relative; width: 100vw; max-width: 500px; height: 380px; pointer-events: none; display: flex; align-items: center; justify-content: center; }
   .ai-floating-group { position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; animation: floating 3s ease-in-out infinite; pointer-events: auto; }
   @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
   .ai-robot-img { width: 440px; height: auto; pointer-events: none; position: absolute; left: 50%; transform: translateX(-55%); top: -30px; z-index: 2; filter: drop-shadow(0 0 15px rgba(255, 26, 140, 0.9)); }
-
+  
   .ai-panel { position: absolute; left: 50%; transform: translateX(-15%); top: 118px; width: 175px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; color: #fff; z-index: 3; }
   .ai-data-content { display: flex; flex-direction: column; gap: 6px; width: 100%; }
   .ai-info-row { display: flex; align-items: center; justify-content: space-between; font-size: 14.5px; font-weight: 800; white-space: nowrap; width: 100%; text-shadow: 1px 1px 3px #000; }
   .ai-label { color: #e2e8f0; padding-left: 5px; }
-  .ai-value { font-weight: 900; font-size: 16.5px; text-align: right; padding-right: 5px; transition: 0.3s; }
-  .ai-value.flash { animation: flashAnim 0.6s ease; }
-  @keyframes flashAnim { 0% { filter: brightness(2.5); transform: scale(1.1); } 100% { filter: brightness(1); transform: scale(1); } }
+  .ai-value { font-weight: 900; font-size: 16.5px; text-align: right; padding-right: 5px; }
   .color-tai { color: #22d3ee; text-shadow: 0 0 8px #22d3ee; }
   .color-xiu { color: #ff1a8c; text-shadow: 0 0 8px #ff1a8c; }
   .conf-50-60  { color: #94a3b8; }
@@ -123,27 +120,18 @@
   .conf-90-100 { color: #facc15; font-weight: 900; }
 
   @media (max-width: 600px) {
-    #robotMd5 { left: 2%; top: 8%; }
-    #robotHu { left: 2%; bottom: 18%; }
-    .ai-robot-container { height: 340px; width: 95vw; }
-    .ai-robot-img { width: 360px; top: -20px; }
-    .ai-panel { top: 95px; width: 155px; transform: translateX(-8%); }
-    .ai-info-row { font-size: 13px; }
-    .ai-value { font-size: 15px; }
-    .ctrl-btn { padding: 7px 14px; font-size: 12px; }
+    .ai-robot-container { height: 340px; }
+    .ai-robot-img { width: 390px; top: -20px; }
+    .ai-panel { top: 105px; width: 160px; transform: translateX(-12%); }
+    .ai-info-row { font-size: 13.5px; }
+    .ai-value { font-size: 15.5px; }
   }
 </style>
 </head>
 <body>
 
-<!-- IFRAME GAME (Chỉ hiển thị nếu không phải Safari) -->
-<iframe
-  id="siteFrame"
-  src="https://lc79b.bet"
-  allow="fullscreen"
-  allowfullscreen
-  referrerpolicy="strict-origin-when-cross-origin"
-  loading="eager"></iframe>
+<!-- IFRAME GAME (SẼ ẨN TRÊN SAFARI VÀ DÙNG CHUYỂN HƯỚNG) -->
+<iframe allow="fullscreen" id="siteFrame" referrerpolicy="strict-origin-when-cross-origin" src="https://lc79b.bet" loading="lazy"></iframe>
 
 <!-- NÚT CÀI ĐẶT -->
 <div id="settingsBtn" onclick="openLogin()">
@@ -225,9 +213,9 @@
 </div>
 
 <script>
-/* ================== CẤU HÌNH ================== */
-const BACKEND_URL = "https://bontooltxios.onrender.com/";
-const GAME_URL = "https://lc79b.bet"; // Link game cố định
+// ⚠️ LINK BACKEND CỦA BẠN
+const BACKEND_URL = "https://bontooltxios.onrender.com/"; 
+const GAME_URL = "https://lc79b.bet"; // Link game chuyển hướng
 
 const POLL_INTERVAL_MS = 1000;
 const API_MD5 = "https://leminhmd5.onrender.com/lc79md5";
@@ -236,30 +224,27 @@ const API_HU  = "https://miinhexiutxthuong.onrender.com/lc79hu";
 let isToolInit = false;
 let isLoggingIn = false;
 
-/* ================== FIX LỖI SAFARI (WebKitBlobResource) ================== */
-// Safari trên iOS chặn cứng iframe game bài. Nếu phát hiện Safari, ẩn iframe đi.
-// Bạn có thể code thêm chuyển hướng (window.location.href = GAME_URL) nếu muốn ép ra game.
+// 🔥 FIX LỖI SAFARI: Ẩn iframe nếu là Safari/iOS và dùng chuyển hướng
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || /iPad|iPhone|iPod/.test(navigator.userAgent);
 if (isSafari) {
   document.getElementById('siteFrame').style.display = 'none';
-  // Tự động chuyển sang game sau 1 giây (Tool sẽ mất, nếu muốn giữ tool thì xóa dòng dưới)
-  // setTimeout(() => { window.location.href = GAME_URL; }, 1000); 
+  // Tự động chuyển hướng sang game sau khi tải tool 1 nhịp
+  setTimeout(() => { window.location.href = GAME_URL; }, 1500); 
+} else {
+  document.getElementById('siteFrame').style.display = 'block';
 }
 
-/* ================== STATE ROBOT ================== */
 const stateMd5 = { isFetching:false, currentId:null, errorCount:0, history:[], lastConf:null, lastBucket:null,
   els:{ session:document.getElementById('md5-session'), prediction:document.getElementById('md5-prediction'), confidence:document.getElementById('md5-confidence') } };
 
 const stateHu = { isFetching:false, currentId:null, errorCount:0, history:[], lastConf:null, lastBucket:null,
   els:{ session:document.getElementById('hu-session'), prediction:document.getElementById('hu-prediction'), confidence:document.getElementById('hu-confidence') } };
 
-/* ================== KHỞI ĐỘNG ================== */
-window.addEventListener('load', function() {
+window.onload = function() {
   const savedKey = localStorage.getItem('vip_key');
   if (savedKey) startTool();
-});
+}
 
-/* ================== LOGIN UI ================== */
 function openLogin(){ document.getElementById('loginOverlay').classList.add('active'); }
 function closeLogin(e){ if(e) e.stopPropagation(); document.getElementById('loginOverlay').classList.remove('active'); }
 
@@ -276,7 +261,7 @@ async function submitKey() {
   const btn = document.getElementById('btnActivate');
   const btnText = document.getElementById('btnText');
   const spinner = document.getElementById('loadingSpinner');
-
+  
   if (!key) { errEl.innerText = "Vui lòng nhập key!"; errEl.style.display='block'; return; }
 
   isLoggingIn = true;
@@ -297,7 +282,7 @@ async function submitKey() {
       btnText.innerText = "ĐĂNG NHẬP"; spinner.style.display='none'; btn.disabled = false;
     }
   } catch(e) {
-    errEl.innerText = "Lỗi kết nối Server! (Đợi 30s do Render khởi động)";
+    errEl.innerText = "Lỗi kết nối Server! (Vui lòng đợi 30s do Render khởi động)";
     errEl.style.display='block';
     btnText.innerText = "ĐĂNG NHẬP"; spinner.style.display='none'; btn.disabled = false;
   } finally {
@@ -311,7 +296,6 @@ function logout(){
   }
 }
 
-/* ================== START TOOL ================== */
 function startTool(){
   setTimeout(()=>document.getElementById('controlPanel').classList.add('active'),100);
   setTimeout(()=>{
@@ -332,7 +316,6 @@ function startTool(){
   }
 }
 
-/* ================== HELPERS ================== */
 function flash(el){ if(!el) return; el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
 
 function parseTX(v){
@@ -431,69 +414,45 @@ async function fetchApi(url, state) {
   } catch (e) {} finally { state.isFetching = false; }
 }
 
-/* ================== DRAG ROBOT ================== */
 function setupDrag(wrapperId, containerId) {
   const widget = document.getElementById(wrapperId);
   const container = document.getElementById(containerId);
-  let startX=0, startY=0, startLeft=0, startTop=0, isDragging=false;
+  let pos1=0, pos2=0, pos3=0, pos4=0, isDragging=false;
 
   container.addEventListener('pointerdown', (e) => {
     if (widget.classList.contains('is-hidden')) return;
     isDragging = true;
-    container.setPointerCapture?.(e.pointerId);
-
     document.querySelectorAll('.robot-wrapper').forEach(el => el.style.zIndex='99');
     widget.style.zIndex = '100';
-
     const rect = widget.getBoundingClientRect();
     widget.style.transform = 'none';
-    widget.style.bottom = 'auto';
     widget.style.left = rect.left + 'px';
     widget.style.top  = rect.top  + 'px';
-
-    startX = e.clientX;
-    startY = e.clientY;
-    startLeft = rect.left;
-    startTop  = rect.top;
-
+    widget.style.bottom = 'auto';
+    pos3 = e.clientX; pos4 = e.clientY;
     document.addEventListener('pointermove', onDrag);
     document.addEventListener('pointerup', onDrop);
-    document.addEventListener('pointercancel', onDrop);
   });
 
   function onDrag(e){
     if(!isDragging) return;
     e.preventDefault();
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    let left = startLeft + dx;
-    let top  = startTop  + dy;
-    const maxLeft = window.innerWidth  - widget.offsetWidth;
-    const maxTop  = window.innerHeight - widget.offsetHeight;
-    left = Math.max(0, Math.min(left, maxLeft));
-    top  = Math.max(0, Math.min(top,  maxTop));
-    widget.style.left = left + 'px';
+    pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
+    pos3 = e.clientX; pos4 = e.clientY;
+    let top  = widget.offsetTop  - pos2;
+    let left = widget.offsetLeft - pos1;
+    top  = Math.max(0, Math.min(top,  window.innerHeight - widget.offsetHeight));
+    left = Math.max(0, Math.min(left, window.innerWidth  - widget.offsetWidth));
     widget.style.top  = top  + 'px';
+    widget.style.left = left + 'px';
   }
 
-  function onDrop(e){
+  function onDrop(){
     isDragging = false;
     document.removeEventListener('pointermove', onDrag);
     document.removeEventListener('pointerup', onDrop);
-    document.removeEventListener('pointercancel', onDrop);
   }
 }
-
-window.addEventListener('resize', () => {
-  document.querySelectorAll('.robot-wrapper').forEach(w => {
-    if (w.classList.contains('is-hidden')) return;
-    const rect = w.getBoundingClientRect();
-    const maxLeft = window.innerWidth  - w.offsetWidth;
-    const maxTop  = window.innerHeight - w.offsetHeight;
-    if (rect.left > maxLeft) w.style.left = Math.max(0, maxLeft) + 'px';
-    if (rect.top  > maxTop)  w.style.top  = Math.max(0, maxTop)  + 'px';
-  });
-});
 </script>
 </body>
 </html>
